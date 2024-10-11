@@ -43,14 +43,13 @@ $(document).ready(function () {
     $("#mainContent").load("./femaleCandidates/femaleTalent.php");
   });
 
-  // Other Links
   $("#rulesLink").on("click", function (event) {
     event.preventDefault();
-    $("#mainContent").load("./try/rules.php");
+    $("#mainContent").load("./default/rules.php");
   });
 
   $("#homeLink").on("click", function (event) {
     event.preventDefault();
-    $("#mainContent").load("./try/home.php");
+    $("#mainContent").load("./default/home.php");
   });
 });
