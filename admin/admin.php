@@ -77,12 +77,12 @@ include '../partial/Connection.php';
 
         $("#viewAllCandidatesLink").on("click", function(event) {
             event.preventDefault();
-            $("#mainContent").load("viewCandidates.php");
+            $("#mainContent").load("view_candidates.php");
         });
 
         $("#scoreboardLink").on("click", function(event) {
             event.preventDefault();
-            $("#mainContent").load("talentScoreboard.php");
+            $("#mainContent").load("talent_scoreboard.php");
         });
     });
     </script>

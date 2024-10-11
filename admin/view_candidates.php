@@ -1,7 +1,7 @@
 <?php
 include '../partial/Connection.php';
 
-$sql = "SELECT * FROM candidates"; // Assuming you're using 'candidates' table
+$sql = "SELECT * FROM candidates";
 $result = $conn->query($sql);
 ?>
 
