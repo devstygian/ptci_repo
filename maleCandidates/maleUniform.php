@@ -3,7 +3,6 @@ session_start();
 include '../partial/Connection.php';
 include '../judgeFunction/candidateFunction.php'; 
 
-// Fetch only female candidates
 $sql = "SELECT candidateno, fullname, Course, Year, team FROM managecandidates WHERE gender = 'Female'";
 $result = $conn->query($sql);
 

@@ -15,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $totalScore = ($score['mastery'] + $score['performance'] + $score['impression'] + $score['impact']) / 4;
                 $totalScoreFormatted = number_format($totalScore, 2);
                 
-                $stmt = $conn->prepare("INSERT INTO talent (candidate_no, fullname, course, team, mastery, performance, impression, impact, total_score) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("isssiiiii", $candidateNo, $candidateDetails['fullname'], $candidateDetails['course'], $candidateDetails['team'], $score['mastery'], $score['performance'], $score['impression'], $score['impact'], $totalScoreFormatted);
+                $stmt = $conn->prepare("INSERT INTO talent (tal_mastery, tal_performance, tal_impression, tal_audience, tal_total_score) VALUES (?, ?, ?, ?, ?)");
+                $stmt->bind_param("iiids", $score['mastery'], $score['performance'], $score['impression'], $score['impact'], $totalScoreFormatted);
                 $stmt->execute();
             }
         }
@@ -25,10 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['error' => 'No scores submitted.']);
     }
     $conn->close();
-    exit(); // Stop further execution after handling POST
+    exit();
 }
-
-// Only show the scoreboard when not processing a POST request
 ?>
 
 <div class="container mt-5">
@@ -43,27 +41,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <th>Mastery</th>
                 <th>Performance</th>
                 <th>Impression</th>
-                <th>Impact</th>
+                <th>Audience</th>
                 <th>Total Score</th>
             </tr>
         </thead>
         <tbody>
             <?php
-            $stmt = $conn->prepare("SELECT * FROM talent ORDER BY total_score DESC");
+            // Fetching all entries from the talent table
+            $stmt = $conn->prepare("SELECT * FROM talent");
             $stmt->execute();
             $result = $stmt->get_result();
 
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>
-                    <td>{$row['candidate_no']}</td>
-                    <td>{$row['fullname']}</td>
-                    <td>{$row['course']}</td>
-                    <td>{$row['team']}</td>
-                    <td>{$row['mastery']}</td>
-                    <td>{$row['performance']}</td>
-                    <td>{$row['impression']}</td>
-                    <td>{$row['impact']}</td>
-                    <td>{$row['total_score']}</td>
+                    <td>" . ($row['tal_id'] ?? 'N/A') . "</td>
+                    <td>" . ($candidateDetails['fullname'] ?? 'N/A') . "</td> <!-- Adjust as needed -->
+                    <td>" . ($candidateDetails['course'] ?? 'N/A') . "</td> <!-- Adjust as needed -->
+                    <td>" . ($candidateDetails['team'] ?? 'N/A') . "</td> <!-- Adjust as needed -->
+                    <td>" . ($row['tal_mastery'] ?? 'N/A') . "</td>
+                    <td>" . ($row['tal_performance'] ?? 'N/A') . "</td>
+                    <td>" . ($row['tal_impression'] ?? 'N/A') . "</td>
+                    <td>" . ($row['tal_audience'] ?? 'N/A') . "</td>
+                    <td>" . ($row['tal_total_score'] ?? 'N/A') . "</td>
                 </tr>";
             }
             ?>
