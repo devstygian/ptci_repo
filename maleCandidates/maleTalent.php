@@ -32,6 +32,9 @@ $candidates = getMaleCandidates($conn);
                             <td><?php echo htmlspecialchars($candidate['cand_course']); ?></td>
                             <td><?php echo htmlspecialchars($candidate['cand_team']); ?></td>
                             <td>
+                                <input type="hidden" name="candidates[<?php echo $candidate['cand_no']; ?>][fullname]" value="<?php echo htmlspecialchars($candidate['cand_fn'] . ' ' . $candidate['cand_ln']); ?>">
+                                <input type="hidden" name="candidates[<?php echo $candidate['cand_no']; ?>][course]" value="<?php echo htmlspecialchars($candidate['cand_course']); ?>">
+                                <input type="hidden" name="candidates[<?php echo $candidate['cand_no']; ?>][team]" value="<?php echo htmlspecialchars($candidate['cand_team']); ?>">
                                 <input type="number" name="scores[<?php echo $candidate['cand_no']; ?>][mastery]" class="form-control" placeholder="0-30" min="0" max="30" required>
                             </td>
                             <td>
@@ -54,7 +57,6 @@ $candidates = getMaleCandidates($conn);
         </table>
         <button type="button" class="btn btn-primary" id="submitButton">Submit Scores</button>
     </form>
-
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -72,7 +74,6 @@ $candidates = getMaleCandidates($conn);
             </div>
         </div>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -81,6 +82,7 @@ $candidates = getMaleCandidates($conn);
             $('#confirmationModal').modal('show');
         });
 
+        // Handle the confirmation of submission
         $('#confirmSubmit').on('click', function() {
             const formData = $('#scoreForm').serialize();
             $.ajax({
@@ -109,6 +111,5 @@ $candidates = getMaleCandidates($conn);
             });
         });
     });
-</script>
-
+    </script>
 </div>

@@ -47,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </thead>
         <tbody>
             <?php
-            // Fetching all entries from the talent table
             $stmt = $conn->prepare("SELECT * FROM talent");
             $stmt->execute();
             $result = $stmt->get_result();
@@ -55,9 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>
                     <td>" . ($row['tal_id'] ?? 'N/A') . "</td>
-                    <td>" . ($candidateDetails['fullname'] ?? 'N/A') . "</td> <!-- Adjust as needed -->
-                    <td>" . ($candidateDetails['course'] ?? 'N/A') . "</td> <!-- Adjust as needed -->
-                    <td>" . ($candidateDetails['team'] ?? 'N/A') . "</td> <!-- Adjust as needed -->
+                    <td>" . ($row['fullname'] ?? 'N/A') . "</td> 
+                    <td>" . ($row['course'] ?? 'N/A') . "</td> 
+                    <td>" . ($row['team'] ?? 'N/A') . "</td>
                     <td>" . ($row['tal_mastery'] ?? 'N/A') . "</td>
                     <td>" . ($row['tal_performance'] ?? 'N/A') . "</td>
                     <td>" . ($row['tal_impression'] ?? 'N/A') . "</td>
